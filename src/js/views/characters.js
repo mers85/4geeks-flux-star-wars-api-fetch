@@ -1,12 +1,15 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+
 import Card from "../component/card";
 import Loading from "../component/loading";
+import NotFound from "../component/notFound";
 import PropertiesCharacter from "../component/propertiesCharacter";
+
+import { makeFetch } from "../component/functions";
+
 import starWarsImg from "../../img/star001.jpeg";
 import "../../styles/horizontal-scroll.scss";
-import Navbar from "../component/navbar";
-import { makeFetch } from "../component/functions";
 
 function Characters() {
 	const { store, actions } = useContext(Context);
@@ -29,7 +32,9 @@ function Characters() {
 				<h3>Character</h3>
 
 				<div className="card-deck-scrollable flex-nowrap overflow-auto py-3">
-					{store.people ? (
+					{store.isPending ? (
+						<Loading />
+					) : store.people ? (
 						store.people.results.map(character => {
 							return (
 								<Card
@@ -45,7 +50,7 @@ function Characters() {
 							);
 						})
 					) : (
-						<Loading />
+						<NotFound />
 					)}
 					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextCharacters}>

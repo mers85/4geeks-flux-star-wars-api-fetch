@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+
 import Card from "../component/card";
 import Loading from "../component/loading";
-import millenniumfalconImg from "../../img/millennium-falcon.jpg";
-import "../../styles/horizontal-scroll.scss";
+import NotFound from "../component/notFound";
 import PropertiesVehicle from "../component/propertiesVehicle";
 import { makeFetch } from "../component/functions";
+
+import millenniumfalconImg from "../../img/millennium-falcon.jpg";
+import "../../styles/horizontal-scroll.scss";
 
 function Vehicles() {
 	const { store, actions } = useContext(Context);
@@ -28,7 +31,9 @@ function Vehicles() {
 				<h3>Vehicles</h3>
 
 				<div className="card-deck-scrollable flex-nowrap overflow-auto py-3">
-					{store.vehicles ? (
+					{store.isPending ? (
+						<Loading />
+					) : store.vehicles ? (
 						store.vehicles.results.map(vehicle => {
 							return (
 								<Card
@@ -44,7 +49,7 @@ function Vehicles() {
 							);
 						})
 					) : (
-						<Loading />
+						<NotFound />
 					)}
 					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextVehicles}>

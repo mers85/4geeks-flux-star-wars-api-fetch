@@ -19,7 +19,7 @@ export const CardDetail = props => {
 					</div>
 				</div>
 				<hr className="my-4 bg-warning" />
-				<div className="card-deck">
+				<div className="card-deck d-flex flex-nowrap">
 					{props.moreDetails
 						? props.moreDetails.map(detail => {
 								return (

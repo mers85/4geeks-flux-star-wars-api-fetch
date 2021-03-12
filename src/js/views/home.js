@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React from "react";
 import "../../styles/home.scss";
-import { Context } from "../store/appContext";
 import Characters from "./characters";
 import Planets from "./planets";
 import Vehicles from "./vehicles";

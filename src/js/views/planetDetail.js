@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+
 import CardDetail from "../component/cardDetail";
+import NotFound from "../component/notFound";
+import Loading from "../component/loading";
+
 import { urlPlanets } from "../component/helpers.js";
 import TatooineImg from "../../img/tatooinePlanet.jpg";
 
@@ -21,6 +25,7 @@ function CharacterDetail() {
 			.then(data => {
 				if (data) {
 					setDetail(data.result);
+					actions.loading(false);
 				}
 			})
 			.catch(err => console.error(err));
@@ -35,7 +40,9 @@ function CharacterDetail() {
 		{ title: "Orbital period", content: detail.properties ? detail.properties.orbital_period : "" }
 	];
 
-	return detail.properties && detail.description ? (
+	return store.isPending ? (
+		<Loading />
+	) : detail.properties && detail.description ? (
 		<CardDetail
 			image={TatooineImg}
 			title={detail.properties.name}
@@ -56,7 +63,7 @@ function CharacterDetail() {
 			moreDetails={moreDetails}
 		/>
 	) : (
-		"Not found"
+		<NotFound />
 	);
 }
 

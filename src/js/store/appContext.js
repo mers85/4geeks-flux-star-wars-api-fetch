@@ -27,16 +27,25 @@ const injectContext = PassedComponent => {
 			makeFetch(urlCharacters).then(response => {
 				if (response) {
 					state.actions.addCharacters(response);
+					state.actions.loading(false);
+				} else {
+					state.actions.loading(false);
 				}
 			});
 			makeFetch(urlPlanets).then(response => {
 				if (response) {
 					state.actions.addPlanets(response);
+					state.actions.loading(false);
+				} else {
+					state.actions.loading(false);
 				}
 			});
 			makeFetch(urlVehicles).then(response => {
 				if (response) {
 					state.actions.addVehicles(response);
+					state.actions.loading(false);
+				} else {
+					state.actions.loading(false);
 				}
 			});
 		}, []);

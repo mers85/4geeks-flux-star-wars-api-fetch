@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 
 export const Footer = () => (
 	<footer className="footer mt-auto py-4 text-center">
 		<p>
-			Made with by <a href="http://www.4geeksacademy.com">OUEG & MERS</a>
+			Made by <a href="https://github.com/omarsomx/StarWars_4Geeks">OUEG </a>&
+			<a href="https://github.com/mers85/4geeks-flux-star-wars-api-fetch"> MERS</a>
 		</p>
 	</footer>
 );

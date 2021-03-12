@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import starWarsImg from "../../img/star001.jpeg";
+
 import CardDetail from "../component/cardDetail";
+import NotFound from "../component/notFound";
+import Loading from "../component/loading";
+
+import starWarsImg from "../../img/star001.jpeg";
 import { urlCharacters } from "../component/helpers.js";
 
 function CharacterDetail() {
@@ -21,6 +25,7 @@ function CharacterDetail() {
 			.then(data => {
 				if (data) {
 					setDetail(data.result);
+					actions.loading(false);
 				}
 			})
 			.catch(err => console.error(err));
@@ -35,7 +40,9 @@ function CharacterDetail() {
 		{ title: "Eye Color", content: detail.properties ? detail.properties.eye_color : "" }
 	];
 
-	return detail.properties && detail.description ? (
+	return store.isPending ? (
+		<Loading />
+	) : detail.properties && detail.description ? (
 		<CardDetail
 			image={starWarsImg}
 			title={detail.properties.name}
@@ -43,9 +50,7 @@ function CharacterDetail() {
 			moreDetails={moreDetails}
 		/>
 	) : (
-		<div className="container py-5 my-5">
-			<h4 className="text-muted mx-auto">Not found</h4>
-		</div>
+		<NotFound />
 	);
 }
 

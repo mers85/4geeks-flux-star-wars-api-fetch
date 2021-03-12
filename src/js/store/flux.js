@@ -5,7 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			people: null,
 			planets: null,
-			vehicles: null
+			vehicles: null,
+			isPending: true
 		},
 		actions: {
 			addCharacters: newResponse => {
@@ -37,6 +38,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				newResponse.results = [...oldResponseResults, ...newResponse.results];
 				setStore({ vehicles: newResponse });
+			},
+			loading: value => {
+				setStore({ isPending: value });
 			},
 			toggleFavorite: (uid, path) => {
 				let obj;

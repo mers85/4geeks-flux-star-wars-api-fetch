@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+
 import Card from "../component/card";
-import TatooineImg from "../../img/tatooinePlanet.jpg";
 import Loading from "../component/loading";
-import "../../styles/horizontal-scroll.scss";
+import NotFound from "../component/notFound";
 import PropertiesPlanet from "../component/propertiesPlanet";
 import { makeFetch } from "../component/functions";
+
+import TatooineImg from "../../img/tatooinePlanet.jpg";
+import "../../styles/horizontal-scroll.scss";
 
 function Planets() {
 	const { store, actions } = useContext(Context);
@@ -27,7 +30,9 @@ function Planets() {
 				<h3>Planets</h3>
 
 				<div className="card-deck-scrollable flex-nowrap overflow-auto py-3">
-					{store.planets ? (
+					{store.isPending ? (
+						<Loading />
+					) : store.planets ? (
 						store.planets.results.map(planet => {
 							return (
 								<Card
@@ -43,7 +48,7 @@ function Planets() {
 							);
 						})
 					) : (
-						<Loading />
+						<NotFound />
 					)}
 					{urlNextPagination ? (
 						<button className="btn btn-light border-0" onClick={nextPlanets}>

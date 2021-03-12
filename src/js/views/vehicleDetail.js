@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+
 import CardDetail from "../component/cardDetail";
+import NotFound from "../component/notFound";
+import Loading from "../component/loading";
+
 import { urlVehicles } from "../component/helpers.js";
 import millenniumfalconImg from "../../img/millennium-falcon.jpg";
 
@@ -21,6 +25,7 @@ function VehicleDetail() {
 			.then(data => {
 				if (data) {
 					setDetail(data.result);
+					actions.loading(false);
 				}
 			})
 			.catch(err => console.error(err));
@@ -36,7 +41,9 @@ function VehicleDetail() {
 		{ title: "Consumables", content: detail.properties ? detail.properties.consumables : "" }
 	];
 
-	return detail.properties && detail.description ? (
+	return store.isPending ? (
+		<Loading />
+	) : detail.properties && detail.description ? (
 		<CardDetail
 			image={millenniumfalconImg}
 			title={detail.properties.name}
@@ -57,7 +64,7 @@ function VehicleDetail() {
 			moreDetails={moreDetails}
 		/>
 	) : (
-		"Not found"
+		<NotFound />
 	);
 }
 

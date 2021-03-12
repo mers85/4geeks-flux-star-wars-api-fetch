@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 
 export const Card = props => {
-	const { store, actions } = useContext(Context);
+	const { actions } = useContext(Context);
 
 	return (
 		<div className="card">
